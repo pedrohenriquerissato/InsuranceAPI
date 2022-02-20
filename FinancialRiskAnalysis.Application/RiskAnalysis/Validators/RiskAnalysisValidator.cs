@@ -5,7 +5,7 @@ using Insurance.Domain.InputModels;
 namespace Insurance.Application.RiskAnalysis.Validators
 {
     /// <summary>
-    /// Validates all RiskAnalysis business rules
+    /// Validates all RiskAnalysis business rules.
     /// </summary>
     public class RiskAnalysisValidator : AbstractValidator<RiskAnalysisInputModel>
     {
@@ -45,6 +45,27 @@ namespace Insurance.Application.RiskAnalysis.Validators
                 .WithMessage("Please input your total income as a number equal or greater than zero (0).");
             #endregion
 
+            #region Marital Status
+            RuleFor(x => x.MaritalStatus)
+                .NotNull()
+                .WithMessage("Marital Status should not be null. Please, choose one of these statuses: ");
+
+            RuleFor(x => x.MaritalStatus)
+                .NotEmpty()
+                .WithMessage("Marital Status should not be empty. Please, choose one of these statuses: ");
+
+            When(x => !string.IsNullOrEmpty(x.MaritalStatus) && !string.IsNullOrWhiteSpace(x.MaritalStatus), () =>
+            {
+                RuleFor(x => x.MaritalStatus).IsEnumName(typeof(MaritalStatus), false)
+                .WithMessage("Marital Status does not seem to be valid. Please, choose one of these statuses: ");
+
+                Transform(from: x => x.MaritalStatus, to: value => Enum.TryParse(typeof(MaritalStatus), value, true, out object? val) ? (MaritalStatus?)val : null)
+                .Must(x => x != MaritalStatus.Unknown)
+                .WithMessage("Marital Status is not valid. Please select one of these statuses: ");
+            });
+
+            #endregion
+
             #region Risk Questions
             RuleFor(x => x.RiskQuestions)
                 .NotEmpty()
@@ -52,7 +73,7 @@ namespace Insurance.Application.RiskAnalysis.Validators
 
             RuleFor(x => x.RiskQuestions)
                 .Must(x => x.Length == 3)
-                .When(x => x.RiskQuestions.Length != 0)
+                .When(x => x.RiskQuestions is not null && x.RiskQuestions.Length != 0)
                 .WithMessage("Risk Questions must contain exactly three answers.");
 
             RuleForEach(x => x.RiskQuestions)
@@ -65,15 +86,21 @@ namespace Insurance.Application.RiskAnalysis.Validators
             {
                 RuleFor(x => x.House.OwnershipStatus)
                 .NotNull()
+                .WithMessage("House Ownership Status must not be null. Please, choose one of these statuses: ");
+
+                RuleFor(x => x.House.OwnershipStatus)
                 .NotEmpty()
-                .WithMessage("House Ownership Status must not be null or empty. Please, choose one of these statuses: ");
+                .WithMessage("House Ownership Status must not be empty. Please, choose one of these statuses: ");
 
                 When(x => !string.IsNullOrEmpty(x.House.OwnershipStatus) && !string.IsNullOrWhiteSpace(x.House.OwnershipStatus), () =>
                 {
                     RuleFor(x => x.House.OwnershipStatus).IsEnumName(typeof(OwnershipStatus), false)
-                    .WithMessage("House Ownership Status does not seem to be valid. Please, choose one of these statuses: ");
-                });
+                .WithMessage("House Ownership Status does not seem to be valid. Please, choose one of these statuses: ");
 
+                    Transform(from: x => x.House.OwnershipStatus, to: value => Enum.TryParse(typeof(OwnershipStatus), value, true, out object? val) ? (OwnershipStatus?)val : null)
+                    .Must(x => x != OwnershipStatus.None)
+                    .WithMessage("House Ownership Status is not valid. Please select one of these statuses: ");
+                });
             });
             #endregion
 

@@ -6,13 +6,11 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(option =>
 {
     option.JsonSerializerOptions.PropertyNamingPolicy = SnakeCaseNamingPolicy.Instance;
 });
 
-// Adds all of other Validators found on the same Assembly
 builder.Services.AddControllers().AddFluentValidation(option =>
 {
     option.RegisterValidatorsFromAssemblyContaining<RiskAnalysisValidator>();
@@ -20,7 +18,6 @@ builder.Services.AddControllers().AddFluentValidation(option =>
 
 builder.Services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -43,7 +40,6 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -1,18 +1,22 @@
 ﻿using FluentValidation.TestHelper;
 using Insurance.Application.RiskAnalysis.Validators;
 using Insurance.Domain.InputModels;
+using System;
 using Xunit;
 
 
 namespace Insurance.Tests.Application.RiskAnalysis.Validators
 {
+    /// <summary>
+    /// Unit tests of <see cref="RiskAnalysisValidator"/> rules.
+    /// </summary>
     public class RiskAnalysisValidatorTest
     {
-        private RiskAnalysisValidator validator;
+        private readonly RiskAnalysisValidator _validator;
 
         public RiskAnalysisValidatorTest()
         {
-            validator = new RiskAnalysisValidator();
+            _validator = new RiskAnalysisValidator();
         }
 
         #region Age
@@ -29,7 +33,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Age)
@@ -46,7 +50,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Age)
@@ -65,7 +69,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Age)
@@ -84,7 +88,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(x => x.Age);
@@ -102,7 +106,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Dependents)
@@ -121,7 +125,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Result
             result.ShouldHaveValidationErrorFor(x => x.Dependents)
@@ -140,7 +144,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(x => x.Dependents);
@@ -158,7 +162,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.Income)
@@ -177,7 +181,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Result
             result.ShouldHaveValidationErrorFor(x => x.Income)
@@ -196,10 +200,104 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldNotHaveValidationErrorFor(x => x.Income);
+        }
+        #endregion
+
+        #region Marital Status
+        [Fact]
+        public void MaritalStatus_Null_ReturnsErrorNotNull()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                MaritalStatus = null
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
+                .WithErrorMessage("Marital Status should not be null. Please, choose one of these statuses: ");
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData("   ")]
+        public void MaritalStatus_Empty_ReturnsErrorNotEmpty(string maritalStatus)
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                MaritalStatus = maritalStatus
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
+                .WithErrorMessage("Marital Status should not be empty. Please, choose one of these statuses: ");
+        }
+
+        [Fact]
+        public void MaritalStatus_InvalidStatus_ReturnsErrorInvalidStatus()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                MaritalStatus = "any"
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
+                .WithErrorMessage("Marital Status does not seem to be valid. Please, choose one of these statuses: ");
+        }
+
+        [Fact]
+        public void MaritalStatus_StatusNone_ReturnsErrorStatusNone()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                MaritalStatus = "none"
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
+                .WithoutErrorMessage("Marital Status is not valid. Please select one of these statuses: ");
+        }
+
+        [Theory]
+        [InlineData("single")]
+        [InlineData("Single")]
+        [InlineData("SiNgLe")]
+        [InlineData("married")]
+        [InlineData("Married")]
+        [InlineData("MaRrIeD")]
+        public void MaritalStatus_ValidStatus_ReturnsWithoutErrors(string maritalStatus)
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                MaritalStatus = maritalStatus
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.MaritalStatus);
         }
         #endregion
 
@@ -214,7 +312,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.RiskQuestions)
@@ -222,8 +320,8 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
         }
 
         [Theory]
-        [InlineData(new int[] {0, 0})]
-        [InlineData(new int[] {0})]
+        [InlineData(new int[] { 0, 0 })]
+        [InlineData(new int[] { 0 })]
         public void RiskQuestions_MinimumRequiredAnswers_ReturnsErrorMinimumRequiredAnswers(int[] riskQuestions)
         {
             //Arrange
@@ -233,12 +331,264 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             };
 
             //Act
-            var result = validator.TestValidate(model);
+            var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.RiskQuestions)
                 .WithErrorMessage("Risk Questions must contain exactly three answers.");
         }
+
+        [Theory]
+        [InlineData(new int[] { 0, 0, int.MinValue })]
+        [InlineData(new int[] { 0, 0, int.MaxValue })]
+        public void RiskQuestions_NonBooleans_ReturnsErrorOnlyZerosAndOnes(int[] riskQuestions)
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                RiskQuestions = riskQuestions
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.RiskQuestions)
+                .WithErrorMessage("Risk Questions must be filled with zero (0) for false and one (1) for true.");
+        }
+
+        [Theory]
+        [InlineData(new int[] { 0, 0, 0 })]
+        [InlineData(new int[] { 0, 0, 1 })]
+        [InlineData(new int[] { 0, 1, 0 })]
+        [InlineData(new int[] { 0, 1, 1 })]
+        [InlineData(new int[] { 1, 0, 0 })]
+        [InlineData(new int[] { 1, 0, 1 })]
+        [InlineData(new int[] { 1, 1, 0 })]
+        [InlineData(new int[] { 1, 1, 1 })]
+        public void RiskQuestions_Valid_ReturnsWithoutErrors(int[] riskQuestions)
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                RiskQuestions = riskQuestions
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.RiskQuestions);
+        }
+        #endregion
+
+        #region House
+        [Fact]
+        public void House_NullOrEmpty_ReturnsWithoutErrors()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel();
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.House);
+        }
+
+        [Fact]
+        public void OwnershipStatus_Null_ReturnsErrorNull()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                House = new Domain.Entitities.House()
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
+                .WithErrorMessage("House Ownership Status must not be null. Please, choose one of these statuses: ");
+        }
+
+        [Fact]
+        public void OwnershipStatus_Empty_ReturnsErrorEmpty()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                House = new Domain.Entitities.House
+                {
+                    OwnershipStatus = ""
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
+                .WithErrorMessage("House Ownership Status must not be empty. Please, choose one of these statuses: ");
+        }
+
+        [Fact]
+        public void OwnershipStatus_InvalidStatus_ReturnsErrorInvalidStatus()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                House = new Domain.Entitities.House
+                {
+                    OwnershipStatus = "any"
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
+                .WithErrorMessage("House Ownership Status does not seem to be valid. Please, choose one of these statuses: ");
+        }
+
+        [Fact]
+        public void OwnershipStatus_StatusNone_ReturnsErrorInvalidStatus()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                House = new Domain.Entitities.House
+                {
+                    OwnershipStatus = "none"
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
+                .WithErrorMessage("House Ownership Status is not valid. Please select one of these statuses: ");
+        }
+
+        [Theory]
+        [InlineData("owned")]
+        [InlineData("Owned")]
+        [InlineData("OwNeD")]
+        [InlineData("mortgaged")]
+        [InlineData("Mortgaged")]
+        [InlineData("MoRtGaGed")]
+        public void OwnershipStatus_ValidStatus_ReturnsWithoutErrors(string ownershipStatus)
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                House = new Domain.Entitities.House
+                {
+                    OwnershipStatus = ownershipStatus
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.House.OwnershipStatus);
+        }
+        #endregion
+
+        #region Vehicle
+        [Fact]
+        public void Vehicle_Null_ReturnsWithoutErrors()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel();
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.Vehicle);
+        }
+
+        [Fact]
+        public void Vehicle_InvalidMinimumValue_ReturnsErrorInvalidYear()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                Vehicle = new Domain.Entitities.Vehicle
+                {
+                    Year = 1768
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.Vehicle.Year);
+        }
+
+        [Fact]
+        public void Vehicle_InvalidMaximumValue_ReturnsErrorInvalidYear()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                Vehicle = new Domain.Entitities.Vehicle
+                {
+                    Year = DateTime.Now.AddYears(2).Year
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldHaveValidationErrorFor(x => x.Vehicle.Year);
+        }
+
+        [Fact]
+        public void Vehicle_ValidMinimumYear_ReturnsWithoutErrors()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                Vehicle = new Domain.Entitities.Vehicle
+                {
+                    Year = 1769
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.Vehicle.Year);
+        }
+
+        [Fact]
+        public void Vehicle_ValidMaximumYear_ReturnsWithoutErrors()
+        {
+            //Arrange
+            var model = new RiskAnalysisInputModel
+            {
+                Vehicle = new Domain.Entitities.Vehicle
+                {
+                    Year = DateTime.Now.AddYears(1).Year
+                }
+            };
+
+            //Act
+            var result = _validator.TestValidate(model);
+
+            //Assert
+            result.ShouldNotHaveValidationErrorFor(x => x.Vehicle.Year);
+        }
+
         #endregion
     }
 }
