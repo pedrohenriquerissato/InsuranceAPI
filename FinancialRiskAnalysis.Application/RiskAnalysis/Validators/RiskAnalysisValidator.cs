@@ -1,6 +1,6 @@
-﻿using Insurance.Domain.Enums;
+﻿using FluentValidation;
+using Insurance.Domain.Enums;
 using Insurance.Domain.InputModels;
-using FluentValidation;
 
 namespace Insurance.Application.RiskAnalysis.Validators
 {
@@ -22,7 +22,7 @@ namespace Insurance.Application.RiskAnalysis.Validators
 
             RuleFor(x => x.Age)
                 .LessThanOrEqualTo(122)
-                .WithMessage("Age range has a limit of 122 years old. If you need to insert an age older than that, we congratulate you and ask you to please get in touch with us at itsupport@useorigin.com.");
+                .WithMessage("The age range has a limit of 122 years old. If you need to insert an age older than that, we congratulate you and ask you to please get in touch with us at itsupport@useorigin.com.");
             #endregion
 
             #region Dependents
@@ -47,12 +47,13 @@ namespace Insurance.Application.RiskAnalysis.Validators
 
             #region Risk Questions
             RuleFor(x => x.RiskQuestions)
-               .NotNull()
-               .WithMessage("Risk questions must not be null. Please, answer all three questions.");
+                .NotEmpty()
+                .WithMessage("Risk Questions must not be null or empty.");
 
             RuleFor(x => x.RiskQuestions)
                 .Must(x => x.Length == 3)
-                .WithMessage("Risk Questions must contain exaclty three answers.");
+                .When(x => x.RiskQuestions.Length != 0)
+                .WithMessage("Risk Questions must contain exactly three answers.");
 
             RuleForEach(x => x.RiskQuestions)
                 .Must(x => x == 0 || x == 1)
@@ -65,12 +66,12 @@ namespace Insurance.Application.RiskAnalysis.Validators
                 RuleFor(x => x.House.OwnershipStatus)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("House OwnershipStatus must not be null or empty. Please, choose one of these status: ");
+                .WithMessage("House Ownership Status must not be null or empty. Please, choose one of these statuses: ");
 
                 When(x => !string.IsNullOrEmpty(x.House.OwnershipStatus) && !string.IsNullOrWhiteSpace(x.House.OwnershipStatus), () =>
                 {
                     RuleFor(x => x.House.OwnershipStatus).IsEnumName(typeof(OwnershipStatus), false)
-                    .WithMessage("House OwnershipStatus does not seem to be valid. Please, choose one of these status: ");
+                    .WithMessage("House Ownership Status does not seem to be valid. Please, choose one of these statuses: ");
                 });
 
             });
@@ -83,7 +84,7 @@ namespace Insurance.Application.RiskAnalysis.Validators
                 var vehicleYearMax = DateTime.Now.AddYears(1).Year;
 
                 RuleFor(x => x.Vehicle.Year).InclusiveBetween(vehicleYearMin, vehicleYearMax)
-                .WithMessage($"Your vehicle year must a four digit number between {vehicleYearMin} and {vehicleYearMax}.");
+                .WithMessage($"Your vehicle year must be a four-digit number between {vehicleYearMin} and {vehicleYearMax}.");
             });
             #endregion
         }
