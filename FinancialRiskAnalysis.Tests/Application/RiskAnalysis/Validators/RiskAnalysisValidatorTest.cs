@@ -262,12 +262,12 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
         }
 
         [Fact]
-        public void MaritalStatus_StatusNone_ReturnsErrorStatusNone()
+        public void MaritalStatus_StatusUnknown_ReturnsErrorStatusUnknown()
         {
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                MaritalStatus = "none"
+                MaritalStatus = "unknow"
             };
 
             //Act
