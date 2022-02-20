@@ -3,6 +3,8 @@ using Insurance.Application.RiskAnalysis.Validators;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.OpenApi.Models;
+using MediatR;
+using Insurance.Application.RiskAnalysis.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,10 @@ builder.Services.AddControllers().AddFluentValidation(option =>
 
 builder.Services.AddSingleton<ProblemDetailsFactory, CustomProblemDetailsFactory>();
 
+builder.Services.AddMediatR(typeof(RiskAnalysisCommand));
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
