@@ -402,7 +402,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entitities.House()
+                House = new Domain.Entities.House()
             };
 
             //Act
@@ -419,7 +419,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entitities.House
+                House = new Domain.Entities.House
                 {
                     OwnershipStatus = ""
                 }
@@ -439,7 +439,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entitities.House
+                House = new Domain.Entities.House
                 {
                     OwnershipStatus = "any"
                 }
@@ -459,7 +459,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entitities.House
+                House = new Domain.Entities.House
                 {
                     OwnershipStatus = "none"
                 }
@@ -485,7 +485,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entitities.House
+                House = new Domain.Entities.House
                 {
                     OwnershipStatus = ownershipStatus
                 }
@@ -519,7 +519,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                Vehicle = new Domain.Entitities.Vehicle
+                Vehicle = new Domain.Entities.Vehicle
                 {
                     Year = 1768
                 }
@@ -538,7 +538,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                Vehicle = new Domain.Entitities.Vehicle
+                Vehicle = new Domain.Entities.Vehicle
                 {
                     Year = DateTime.Now.AddYears(2).Year
                 }
@@ -557,7 +557,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                Vehicle = new Domain.Entitities.Vehicle
+                Vehicle = new Domain.Entities.Vehicle
                 {
                     Year = 1769
                 }
@@ -576,7 +576,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                Vehicle = new Domain.Entitities.Vehicle
+                Vehicle = new Domain.Entities.Vehicle
                 {
                     Year = DateTime.Now.AddYears(1).Year
                 }

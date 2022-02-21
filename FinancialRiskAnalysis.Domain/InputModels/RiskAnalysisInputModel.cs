@@ -1,4 +1,4 @@
-﻿using Insurance.Domain.Entitities;
+﻿using Insurance.Domain.Entities;
 
 namespace Insurance.Domain.InputModels
 {
