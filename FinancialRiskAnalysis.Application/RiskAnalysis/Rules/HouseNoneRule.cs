@@ -1,11 +1,11 @@
 ﻿namespace Insurance.Application.RiskAnalysis.Rules
 {
-    public class AgeBetweenThirtyAndFourtyRule : IRiskAnalysisRule
+    public class HouseNoneRule : IRiskAnalysisRule
     {
         public Domain.Entities.RiskAnalysis CalculateRiskAnalisysScore(Domain.Entities.RiskAnalysis riskAnalysis)
         {
-            if (riskAnalysis.Age >= 30 && riskAnalysis.Age <= 40)
-                riskAnalysis.SubtractFromScore(1);
+            if (riskAnalysis.House is null)
+                riskAnalysis.HomeProfile = "ineligigle";
 
             return riskAnalysis;
         }

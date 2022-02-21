@@ -1,6 +1,4 @@
-﻿using Insurance.Application.RiskAnalysis.Commands;
-
-namespace Insurance.Application.RiskAnalysis.Rules
+﻿namespace Insurance.Application.RiskAnalysis.Rules
 {
     public interface IRiskAnalysisRule
     {

@@ -12,6 +12,15 @@ namespace Insurance.Application.RiskAnalysis.Commands
         {
             _rules.Add(new AgeBetweenThirtyAndFourtyRule());
             _rules.Add(new AgeOverSixtyRule());
+            _rules.Add(new AgeUnderThirtyRule());
+            _rules.Add(new HouseMortgagedRule());
+            _rules.Add(new HouseNoneRule());
+            _rules.Add(new IncomeNoneRule());
+            _rules.Add(new IncomeOver200kRule());
+            _rules.Add(new VehicleNoneRule());
+            _rules.Add(new DependentsExistsRule());
+            _rules.Add(new MaritalStatusMarriedRule());
+            _rules.Add(new VehicleLast5YearsRule());
 
             foreach (var rule in _rules)
             {

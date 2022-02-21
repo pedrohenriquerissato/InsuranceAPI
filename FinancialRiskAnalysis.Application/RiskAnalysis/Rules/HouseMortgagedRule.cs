@@ -1,5 +1,4 @@
-﻿using Insurance.Application.RiskAnalysis.Commands;
-using Insurance.Domain.Enums;
+﻿using Insurance.Domain.Enums;
 
 namespace Insurance.Application.RiskAnalysis.Rules
 {
