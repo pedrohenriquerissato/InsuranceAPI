@@ -402,7 +402,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entities.House()
+                House = new House()
             };
 
             //Act
@@ -419,7 +419,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entities.House
+                House = new House
                 {
                     OwnershipStatus = ""
                 }
@@ -439,7 +439,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entities.House
+                House = new House
                 {
                     OwnershipStatus = "any"
                 }
@@ -459,7 +459,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entities.House
+                House = new House
                 {
                     OwnershipStatus = "none"
                 }
@@ -485,7 +485,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
             //Arrange
             var model = new RiskAnalysisInputModel
             {
-                House = new Domain.Entities.House
+                House = new House
                 {
                     OwnershipStatus = ownershipStatus
                 }

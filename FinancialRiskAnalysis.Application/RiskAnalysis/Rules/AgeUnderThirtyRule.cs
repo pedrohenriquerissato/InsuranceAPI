@@ -5,7 +5,12 @@
         public Domain.Entities.RiskAnalysis CalculateRiskAnalisysScore(Domain.Entities.RiskAnalysis riskAnalysis)
         {
             if (riskAnalysis.Age < 30)
-                riskAnalysis.SubtractFromScore(2);
+            {
+                riskAnalysis.AutoScore -= 2;
+                riskAnalysis.LifeScore -= 2;
+                riskAnalysis.HomeScore -= 2;
+                riskAnalysis.DisabilityScore -= 2;
+            }
 
             return riskAnalysis;
         }

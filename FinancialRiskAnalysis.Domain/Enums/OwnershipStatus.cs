@@ -4,6 +4,7 @@
     {
         None = 0,
         Owned = 1,
-        Mortgaged = 2
+        Mortgaged = 2,
+        Ineligible = 3
     }
 }

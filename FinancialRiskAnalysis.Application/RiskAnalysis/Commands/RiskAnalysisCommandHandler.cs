@@ -27,6 +27,8 @@ namespace Insurance.Application.RiskAnalysis.Commands
                 request.RiskAnalysis = rule.CalculateRiskAnalisysScore(request.RiskAnalysis);    
             }
 
+
+
             return new RiskAnalysisViewModel();
         }
     }

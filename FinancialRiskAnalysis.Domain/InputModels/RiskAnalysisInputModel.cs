@@ -1,6 +1,4 @@
-﻿using Insurance.Domain.Entities;
-
-namespace Insurance.Domain.InputModels
+﻿namespace Insurance.Domain.InputModels
 {
     public class RiskAnalysisInputModel
     {
@@ -10,6 +8,11 @@ namespace Insurance.Domain.InputModels
         public int? Income { get; set; }
         public string? MaritalStatus { get; set; }
         public int[]? RiskQuestions { get; set; }
-        public Vehicle? Vehicle { get; set; }
+        public Domain.Entities.Vehicle? Vehicle { get; set; }
+    }
+
+    public class House
+    {
+        public string OwnershipStatus { get; set; }
     }
 }

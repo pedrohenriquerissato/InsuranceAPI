@@ -1,4 +1,6 @@
-﻿namespace Insurance.Application.RiskAnalysis.Rules
+﻿using Insurance.Domain.Enums;
+
+namespace Insurance.Application.RiskAnalysis.Rules
 {
     public class AgeOverSixtyRule : IRiskAnalysisRule
     {
@@ -6,8 +8,8 @@
         {
             if (riskAnalysis.Age > 60)
             {
-                riskAnalysis.LifeProfile = "ineligible";
-                riskAnalysis.DisabilityProfile = "ineligible";
+                riskAnalysis.LifeProfile = ProfileStatus.Ineligible.Name;
+                riskAnalysis.DisabilityProfile = ProfileStatus.Ineligible.Name;
             }
 
             return riskAnalysis;
