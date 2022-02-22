@@ -1,4 +1,5 @@
 ﻿using Insurance.Application.RiskAnalysis.Rules;
+using Insurance.Domain.Enums;
 using Insurance.Domain.ViewModels;
 using MediatR;
 
@@ -24,12 +25,31 @@ namespace Insurance.Application.RiskAnalysis.Commands
 
             foreach (var rule in _rules)
             {
-                request.RiskAnalysis = rule.CalculateRiskAnalisysScore(request.RiskAnalysis);    
+                request.RiskAnalysis = rule.CalculateRiskAnalisysScore(request.RiskAnalysis);
             }
 
+            return new RiskAnalysisViewModel
+            {
+                Auto = request.RiskAnalysis.AutoProfile ?? CalculateRiskProfile(request.RiskAnalysis.AutoScore),
+                Life = request.RiskAnalysis.LifeProfile ?? CalculateRiskProfile(request.RiskAnalysis.LifeScore),
+                Home = request.RiskAnalysis.HomeProfile ?? CalculateRiskProfile(request.RiskAnalysis.HomeScore),
+                Disability = request.RiskAnalysis.DisabilityProfile ?? CalculateRiskProfile(request.RiskAnalysis.DisabilityScore)
+            };
+        }
 
-
-            return new RiskAnalysisViewModel();
+        /// <summary>
+        /// Provides risk profile based on theme score
+        /// </summary>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        private static string CalculateRiskProfile(int score)
+        {
+            return score switch
+            {
+                <= 0 => ProfileStatus.Economic.Name,
+                >= 1 and <= 2 => ProfileStatus.Regular.Name,
+                >= 3 => ProfileStatus.Responsible.Name
+            };
         }
     }
 }

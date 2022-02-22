@@ -1,10 +1,10 @@
-using Insurance.API.Configurations;
-using Insurance.Application.RiskAnalysis.Validators;
 using FluentValidation.AspNetCore;
+using Insurance.API.Configurations;
+using Insurance.Application.RiskAnalysis.Commands;
+using Insurance.Application.RiskAnalysis.Validators;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.OpenApi.Models;
-using MediatR;
-using Insurance.Application.RiskAnalysis.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 

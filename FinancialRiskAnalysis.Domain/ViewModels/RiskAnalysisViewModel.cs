@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Insurance.Domain.ViewModels
+﻿namespace Insurance.Domain.ViewModels
 {
     public class RiskAnalysisViewModel
     {
