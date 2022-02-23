@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using Insurance.Application.Common;
+using System.Text.Json;
 
 namespace Insurance.API.Configurations
 {

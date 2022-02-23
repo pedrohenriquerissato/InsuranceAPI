@@ -23,6 +23,8 @@ namespace Insurance.Application.RiskAnalysis.Commands
             _rules.Add(new MaritalStatusMarriedRule());
             _rules.Add(new VehicleLast5YearsRule());
 
+            throw new Exception();
+
             await Task.Run(() =>
             {
                 foreach (var rule in _rules)
