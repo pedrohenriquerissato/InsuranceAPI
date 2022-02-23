@@ -30,7 +30,6 @@ namespace Insurance.Tests.Application.RiskAnalysis.Rules
         }
 
         [Theory]
-        [InlineData(OwnershipStatus.None)]
         [InlineData(OwnershipStatus.Owned)]
         public void CalculateRiskAnalisysScore_HouseOwnershipStatusDifferentThanMortgaged_ShouldNotChangeHomeAndDisabilityScore(OwnershipStatus ownershipStatus)
         {

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Insurance.Application.Common;
 using Insurance.Domain.Enums;
 using Insurance.Domain.InputModels;
 
@@ -46,22 +47,20 @@ namespace Insurance.Application.RiskAnalysis.Validators
             #endregion
 
             #region Marital Status
+            var maritalStatuses = EnumUtils.GetNames<MaritalStatus>();
+
             RuleFor(x => x.MaritalStatus)
                 .NotNull()
-                .WithMessage("Marital Status should not be null. Please, choose one of these statuses: ");
+                .WithMessage($"Marital Status should not be null. Please, choose one of these statuses: {maritalStatuses}.");
 
             RuleFor(x => x.MaritalStatus)
                 .NotEmpty()
-                .WithMessage("Marital Status should not be empty. Please, choose one of these statuses: ");
+                .WithMessage($"Marital Status should not be empty. Please, choose one of these statuses: {maritalStatuses}.");
 
             When(x => !string.IsNullOrEmpty(x.MaritalStatus) && !string.IsNullOrWhiteSpace(x.MaritalStatus), () =>
             {
                 RuleFor(x => x.MaritalStatus).IsEnumName(typeof(MaritalStatus), false)
-                .WithMessage("Marital Status does not seem to be valid. Please, choose one of these statuses: ");
-
-                Transform(from: x => x.MaritalStatus, to: value => Enum.TryParse(typeof(MaritalStatus), value, true, out object? val) ? (MaritalStatus?)val : null)
-                .Must(x => x != MaritalStatus.Unknown)
-                .WithMessage("Marital Status is not valid. Please select one of these statuses: ");
+                .WithMessage($"Marital Status does not seem to be valid. Please, choose one of these statuses: {maritalStatuses}.");
             });
 
             #endregion
@@ -84,22 +83,20 @@ namespace Insurance.Application.RiskAnalysis.Validators
             #region House
             When(x => x.House is not null, () =>
             {
+                var ownershipStatuses = EnumUtils.GetNames<OwnershipStatus>();
+
                 RuleFor(x => x.House.OwnershipStatus)
                 .NotNull()
-                .WithMessage("House Ownership Status must not be null. Please, choose one of these statuses: ");
+                .WithMessage($"House Ownership Status must not be null. Please, choose one of these statuses: {ownershipStatuses}.");
 
                 RuleFor(x => x.House.OwnershipStatus)
                 .NotEmpty()
-                .WithMessage("House Ownership Status must not be empty. Please, choose one of these statuses: ");
+                .WithMessage($"House Ownership Status must not be empty. Please, choose one of these statuses: {ownershipStatuses}.");
 
                 When(x => !string.IsNullOrEmpty(x.House.OwnershipStatus) && !string.IsNullOrWhiteSpace(x.House.OwnershipStatus), () =>
                 {
                     RuleFor(x => x.House.OwnershipStatus).IsEnumName(typeof(OwnershipStatus), false)
-                .WithMessage("House Ownership Status does not seem to be valid. Please, choose one of these statuses: ");
-
-                    Transform(from: x => x.House.OwnershipStatus, to: value => Enum.TryParse(typeof(OwnershipStatus), value, true, out object? val) ? (OwnershipStatus?)val : null)
-                    .Must(x => x != OwnershipStatus.None)
-                    .WithMessage("House Ownership Status is not valid. Please select one of these statuses: ");
+                .WithMessage($"House Ownership Status does not seem to be valid. Please, choose one of these statuses: {ownershipStatuses}.");
                 });
             });
             #endregion

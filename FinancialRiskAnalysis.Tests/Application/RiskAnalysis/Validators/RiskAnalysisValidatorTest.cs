@@ -1,5 +1,7 @@
 ﻿using FluentValidation.TestHelper;
+using Insurance.Application.Common;
 using Insurance.Application.RiskAnalysis.Validators;
+using Insurance.Domain.Enums;
 using Insurance.Domain.InputModels;
 using System;
 using Xunit;
@@ -217,12 +219,14 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
                 MaritalStatus = null
             };
 
+            var maritalStatuses = EnumUtils.GetNames<MaritalStatus>();
+
             //Act
             var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
-                .WithErrorMessage("Marital Status should not be null. Please, choose one of these statuses: ");
+                .WithErrorMessage($"Marital Status should not be null. Please, choose one of these statuses: {maritalStatuses}.");
         }
 
         [Theory]
@@ -236,12 +240,14 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
                 MaritalStatus = maritalStatus
             };
 
+            var maritalStatuses = EnumUtils.GetNames<MaritalStatus>();
+
             //Act
             var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
-                .WithErrorMessage("Marital Status should not be empty. Please, choose one of these statuses: ");
+                .WithErrorMessage($"Marital Status should not be empty. Please, choose one of these statuses: {maritalStatuses}.");
         }
 
         [Fact]
@@ -253,29 +259,14 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
                 MaritalStatus = "any"
             };
 
-            //Act
-            var result = _validator.TestValidate(model);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
-                .WithErrorMessage("Marital Status does not seem to be valid. Please, choose one of these statuses: ");
-        }
-
-        [Fact]
-        public void MaritalStatus_StatusUnknown_ReturnsErrorStatusUnknown()
-        {
-            //Arrange
-            var model = new RiskAnalysisInputModel
-            {
-                MaritalStatus = "unknow"
-            };
+            var maritalStatuses = EnumUtils.GetNames<MaritalStatus>();
 
             //Act
             var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.MaritalStatus)
-                .WithoutErrorMessage("Marital Status is not valid. Please select one of these statuses: ");
+                .WithErrorMessage($"Marital Status does not seem to be valid. Please, choose one of these statuses: {maritalStatuses}.");
         }
 
         [Theory]
@@ -405,12 +396,14 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
                 House = new House()
             };
 
+            var ownershipStatuses = EnumUtils.GetNames<OwnershipStatus>();
+
             //Act
             var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
-                .WithErrorMessage("House Ownership Status must not be null. Please, choose one of these statuses: ");
+                .WithErrorMessage($"House Ownership Status must not be null. Please, choose one of these statuses: {ownershipStatuses}.");
         }
 
         [Fact]
@@ -425,12 +418,14 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
                 }
             };
 
+            var ownershipStatuses = EnumUtils.GetNames<OwnershipStatus>();
+
             //Act
             var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
-                .WithErrorMessage("House Ownership Status must not be empty. Please, choose one of these statuses: ");
+                .WithErrorMessage($"House Ownership Status must not be empty. Please, choose one of these statuses: {ownershipStatuses}.");
         }
 
         [Fact]
@@ -445,32 +440,14 @@ namespace Insurance.Tests.Application.RiskAnalysis.Validators
                 }
             };
 
-            //Act
-            var result = _validator.TestValidate(model);
-
-            //Assert
-            result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
-                .WithErrorMessage("House Ownership Status does not seem to be valid. Please, choose one of these statuses: ");
-        }
-
-        [Fact]
-        public void OwnershipStatus_StatusNone_ReturnsErrorInvalidStatus()
-        {
-            //Arrange
-            var model = new RiskAnalysisInputModel
-            {
-                House = new House
-                {
-                    OwnershipStatus = "none"
-                }
-            };
+            var ownershipStatuses = EnumUtils.GetNames<OwnershipStatus>();
 
             //Act
             var result = _validator.TestValidate(model);
 
             //Assert
             result.ShouldHaveValidationErrorFor(x => x.House.OwnershipStatus)
-                .WithErrorMessage("House Ownership Status is not valid. Please select one of these statuses: ");
+                .WithErrorMessage($"House Ownership Status does not seem to be valid. Please, choose one of these statuses: {ownershipStatuses}.");
         }
 
         [Theory]

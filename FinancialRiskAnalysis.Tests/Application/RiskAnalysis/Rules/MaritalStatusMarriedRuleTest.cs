@@ -27,7 +27,6 @@ namespace Insurance.Tests.Application.RiskAnalysis.Rules
         }
 
         [Theory]
-        [InlineData(MaritalStatus.Unknown)]
         [InlineData(MaritalStatus.Single)]
         public void CalculateRiskAnalisysScore_AnyMaritalStatusButMarried_ShouldNotChangeAnyScore(MaritalStatus maritalStatus)
         {
