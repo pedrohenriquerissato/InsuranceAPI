@@ -23,10 +23,13 @@ namespace Insurance.Application.RiskAnalysis.Commands
             _rules.Add(new MaritalStatusMarriedRule());
             _rules.Add(new VehicleLast5YearsRule());
 
-            foreach (var rule in _rules)
+            await Task.Run(() =>
             {
-                request.RiskAnalysis = rule.CalculateRiskAnalisysScore(request.RiskAnalysis);
-            }
+                foreach (var rule in _rules)
+                {
+                    request.RiskAnalysis = rule.CalculateRiskAnalisysScore(request.RiskAnalysis);
+                }
+            }, cancellationToken);
 
             return new RiskAnalysisViewModel
             {
@@ -42,7 +45,7 @@ namespace Insurance.Application.RiskAnalysis.Commands
         /// </summary>
         /// <param name="score"></param>
         /// <returns></returns>
-        private static string CalculateRiskProfile(int score)
+        public static string CalculateRiskProfile(int score)
         {
             return score switch
             {
