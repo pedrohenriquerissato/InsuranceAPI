@@ -76,6 +76,7 @@
   <a href="https://www.useorigin.com/join-us">
     <img src="https://i.imgur.com/7YTR3PC.png" alt="Image of API online documentation">
   </a>
+</div>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
