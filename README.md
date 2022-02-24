@@ -94,7 +94,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-First, you need to install [ASP.NET Core Runtime >= 6.0.2](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+First, you need to install [ASP.NET Core Runtime >= 6.0.2](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
 
 ### Running
 
@@ -129,15 +129,15 @@ https://host:port/swagger/index.html
 
 ## Technical Decisions
 
-1. Usage of .NET Framework
+1. Usage of .NET Framework  
    Due to the time I develop professionally using technology.
-2. .NET Version Choice
+2. .NET Version Choice  
    .NET Core 3.1 is the most widely used version. However, besides having no professional experience with .NET 6,
    it is the logical choice as it is a Long Term Supported version by November 8th, 2024.
    [Source](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core#lifecycle).
    Usually, this decision should not be taken by only one developer. The whole team involved opinions and company
    mandates should be observed.
-3. Domain-Driven Design (DDD)
+3. Domain-Driven Design (DDD)  
    DDD is the design pattern of the moment when we talk about API construction nowadays. Its flexibility and
    separation of business/project layers makes a project highly scalable and manageable over time.
    [Read More](https://martinfowler.com/bliki/DomainDrivenDesign.html). This design pattern consists of four layers,
@@ -145,7 +145,7 @@ https://host:port/swagger/index.html
    Infrastructure. In this project, Presentation is the API layer. I like to add another layer called
    Persistence that may be responsible for Database contexts and interactions. Finally, I like to rename Infrastructure
    layer as Integration, which will be responsible for interaction with external services and other APIs.
-4. Fail Fast "pattern/principle/approach"
+4. Fail Fast "pattern/principle/approach"  
    [Fail Fast](https://www.martinfowler.com/ieeeSoftware/failFast.pdf) is a growing practice nowadays that recommends
    that errors related to application conditions should be triggered/displayed as soon as possible to the user. I
    achieve this implementation with a brilliant library called [Fluent Validation](https://fluentvalidation.net/).
@@ -154,7 +154,7 @@ https://host:port/swagger/index.html
    named folder. Usually, these validators will contain a lot of technical rules, ie. Age >= 0, and a few business rules,
    like, a House can exist or not. This validation is fired as soon as a call hits the Controller endpoint and won't
    get any further if one or more conditions are broken.
-5. Mediator Pattern
+5. Mediator Pattern  
    There are many ways of calling "backend" business rules from the Controller. Two of the most common are with Repository
    pattern and [Mediator](https://refactoring.guru/design-patterns/mediator) pattern. In a Repository pattern, usually, an
    interface class will provide all the available contracts methods and another class will implement those contracts.
@@ -168,14 +168,14 @@ https://host:port/swagger/index.html
    for every listener awaiting to catch that message and proceed with another call. But one does not exclude the other,
    in fact, repository pattern [it's recommended either with DDD](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/infrastructure-persistence-layer-design)
    and can be implemented together with Mediator.
-6. Problem Details
+6. Problem Details  
    Problem Details became an [RFC](https://en.wikipedia.org/wiki/Request_for_Comments) ([RFC7807](https://datatracker.ietf.org/doc/html/rfc7807))
    and nowadays is becoming more present in API implementations. Problem Details is a standard for defining an API
    error response object. The implementation in this project will convert any exception from the API (ProblemDetailsException)
    into a Problem Details object, including 500 errors. This standard is really useful for keeping API response consistency
    among any kind of errors thrown. This is especially great for frontends that can implement interceptors and receive
    the same object, independently of the HTTP error code generated.
-7. Rules Pattern
+7. Rules Pattern  
    Professionally, I've been using technical decisions 1 to 6 more than a year so far, but this is the first time
    implementing [Rules Pattern](https://www.michael-whelan.net/rules-design-pattern/), which, in my opinion, was a
    perfect fit for this kind of problem where we would have a lot of IF-ELSE or SWITCH statements. In our API flow, a
@@ -201,7 +201,7 @@ See the [open issues](https://github.com/pedrohenriquerissato/InsuranteAPI/issue
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".  
 Don't forget to give the project a star! Thanks again!
 
 ###Requirements  
