@@ -176,6 +176,8 @@ since on a discussion about some rules, Age/House/Income will be nominated:
 
 <!-- COMMENTS -->
 
+## Comments
+
 1. More About Validators
    Usually validating an InputModel converges into validating some of the Business Rules, which must have been discussed
    extensively in the refinement phase of the respective story/feature. For the brevity of this exercise, I took some
