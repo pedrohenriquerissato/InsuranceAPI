@@ -9,6 +9,12 @@ namespace Insurance.Application.RiskAnalysis.Commands
     {
         private readonly List<IRiskAnalysisRule> _rules = new();
 
+        /// <summary>
+        /// Risk Analysis for insurare types
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         public async Task<RiskAnalysisViewModel> Handle(RiskAnalysisCommand request, CancellationToken cancellationToken)
         {
             _rules.Add(new AgeBetweenThirtyAndFourtyRule());
@@ -22,8 +28,6 @@ namespace Insurance.Application.RiskAnalysis.Commands
             _rules.Add(new DependentsExistsRule());
             _rules.Add(new MaritalStatusMarriedRule());
             _rules.Add(new VehicleLast5YearsRule());
-
-            throw new Exception();
 
             await Task.Run(() =>
             {

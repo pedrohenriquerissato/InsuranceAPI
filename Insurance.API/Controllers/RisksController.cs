@@ -11,12 +11,10 @@ namespace Insurance.API.Controllers
     [Produces("application/json")]
     public class RisksController : ControllerBase
     {
-        private readonly ILogger<RisksController> _logger;
         private readonly IMediator _mediator;
 
-        public RisksController(ILogger<RisksController> logger, IMediator mediator)
+        public RisksController(IMediator mediator)
         {
-            _logger = logger;
             _mediator = mediator;
         }
 

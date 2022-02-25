@@ -6,7 +6,7 @@
         /// Retrieves enum properties names
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <returns>A comma concatenated list of specific enumeration</returns>
         public static string GetNames<T>()
         {
             if (!typeof(T).IsEnum)

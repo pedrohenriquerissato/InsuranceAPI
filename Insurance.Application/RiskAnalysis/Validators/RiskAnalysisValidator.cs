@@ -6,7 +6,7 @@ using Insurance.Domain.InputModels;
 namespace Insurance.Application.RiskAnalysis.Validators
 {
     /// <summary>
-    /// Validates all RiskAnalysis business rules.
+    /// Validates all Risk Analysis business rules.
     /// </summary>
     public class RiskAnalysisValidator : AbstractValidator<RiskAnalysisInputModel>
     {
