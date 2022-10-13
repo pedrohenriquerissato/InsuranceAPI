@@ -1,6 +1,6 @@
 ﻿namespace Insurance.Application.RiskAnalysis.Rules
 {
-    public class IncomeOver200kRule : IRiskAnalysisRule
+    public class IncomeOver200KRule : IRiskAnalysisRule
     {
         public Domain.Entities.RiskAnalysis CalculateRiskAnalisysScore(Domain.Entities.RiskAnalysis riskAnalysis)
         {

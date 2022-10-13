@@ -23,7 +23,7 @@ namespace Insurance.Application.RiskAnalysis.Commands
             _rules.Add(new HouseMortgagedRule());
             _rules.Add(new HouseNoneRule());
             _rules.Add(new IncomeNoneRule());
-            _rules.Add(new IncomeOver200kRule());
+            _rules.Add(new IncomeOver200KRule());
             _rules.Add(new VehicleNoneRule());
             _rules.Add(new DependentsExistsRule());
             _rules.Add(new MaritalStatusMarriedRule());
