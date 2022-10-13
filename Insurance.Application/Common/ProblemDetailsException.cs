@@ -1,10 +1,11 @@
 ﻿using Insurance.Application.Common;
+using System.Collections.Immutable;
 
 namespace Insurance.Application
 {
     public class ProblemDetailsException : Exception
     {
-        public readonly IDictionary<string, string[]>? Errors;
+        public readonly ImmutableDictionary<string, string[]>? Errors;
 
         public ProblemDetailsException()
         {
@@ -18,10 +19,9 @@ namespace Insurance.Application
         {
         }
 
-        public ProblemDetailsException(IDictionary<string, string[]> errors)
+        public ProblemDetailsException(ImmutableDictionary<string, string[]> errors)
         {
-            Errors = errors.ToDictionary(k => k.Key[(k.Key.IndexOf('.') + 1)..].ToSnakeCase(), k => k.Value);
+            Errors = errors.ToImmutableDictionary(k => k.Key[(k.Key.IndexOf('.') + 1)..].ToSnakeCase(), k => k.Value);
         }
-
     }
 }

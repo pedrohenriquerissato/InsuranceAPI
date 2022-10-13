@@ -98,11 +98,13 @@ app.UseExceptionHandler(x => x.Run(async context =>
                 problemDetails.Extensions["errors"] = exception?.Data;
                 break;
         }
+
         context.Response.StatusCode = problemDetails.Status.Value;
         context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
         {
             NoCache = true,
         };
+
         context.Response.ContentType = "application/problem+json";
         await context.Response.WriteAsJsonAsync(problemDetails);
     }
