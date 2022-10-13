@@ -17,7 +17,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Rules
                 Income = income
             };
 
-            var rule = new IncomeOver200kRule();
+            var rule = new IncomeOver200KRule();
 
             //Act
             var result = rule.CalculateRiskAnalisysScore(riskAnalysis);
@@ -40,7 +40,7 @@ namespace Insurance.Tests.Application.RiskAnalysis.Rules
                 Income = income
             };
 
-            var rule = new IncomeOver200kRule();
+            var rule = new IncomeOver200KRule();
 
             //Act
             var result = rule.CalculateRiskAnalisysScore(riskAnalysis);

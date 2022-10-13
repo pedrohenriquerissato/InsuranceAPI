@@ -70,14 +70,16 @@ namespace Insurance.Application.RiskAnalysis.Validators
                 .NotEmpty()
                 .WithMessage("Risk Questions must not be null or empty.");
 
-            RuleFor(x => x.RiskQuestions)
+            When(x => x.RiskQuestions != null, () =>
+            {
+                RuleFor(x => x.RiskQuestions)
                 .Must(x => x.Length == 3)
-                .When(x => x.RiskQuestions is not null && x.RiskQuestions.Length != 0)
                 .WithMessage("Risk Questions must contain exactly three answers.");
 
-            RuleForEach(x => x.RiskQuestions)
-                .Must(x => x == 0 || x == 1)
-                .WithMessage("Risk Questions must be filled with zero (0) for false and one (1) for true.");
+                RuleForEach(x => x.RiskQuestions)
+                    .Must(x => x == 0 || x == 1)
+                    .WithMessage("Risk Questions must be filled with zero (0) for false and one (1) for true.");
+            });
             #endregion
 
             #region House

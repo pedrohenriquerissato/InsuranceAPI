@@ -8,11 +8,11 @@
         public int? Income { get; set; }
         public string? MaritalStatus { get; set; }
         public int[]? RiskQuestions { get; set; }
-        public Domain.Entities.Vehicle? Vehicle { get; set; }
+        public Entities.Vehicle? Vehicle { get; set; }
     }
 
     public class House
     {
-        public string OwnershipStatus { get; set; }
+        public string? OwnershipStatus { get; set; }
     }
 }

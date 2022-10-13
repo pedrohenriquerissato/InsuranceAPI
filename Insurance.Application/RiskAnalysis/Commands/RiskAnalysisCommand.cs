@@ -7,11 +7,12 @@ namespace Insurance.Application.RiskAnalysis.Commands
 {
     public class RiskAnalysisCommand : IRequest<RiskAnalysisViewModel>
     {
-        public Domain.Entities.RiskAnalysis RiskAnalysis;
+        public Domain.Entities.RiskAnalysis RiskAnalysis { get; set; }
 
         public RiskAnalysisCommand(RiskAnalysisInputModel model)
         {
-            TypeAdapterConfig<RiskAnalysisInputModel, Domain.Entities.RiskAnalysis>.NewConfig().MapToConstructor(true);
+            TypeAdapterConfig<RiskAnalysisInputModel, Domain.Entities.RiskAnalysis>.NewConfig()
+                .MapToConstructor(true);
 
             RiskAnalysis = new Domain.Entities.RiskAnalysis(model.RiskQuestions);
             model.Adapt(RiskAnalysis);

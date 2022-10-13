@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
+using System.Collections.Immutable;
 using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,7 +51,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.InvalidModelStateResponseFactory = context =>
     {
         var problemDetails = new ValidationProblemDetails(context.ModelState);
-        throw new ProblemDetailsException(problemDetails.Errors);
+        throw new ProblemDetailsException(problemDetails.Errors.ToImmutableDictionary());
     };
 });
 
@@ -98,11 +99,13 @@ app.UseExceptionHandler(x => x.Run(async context =>
                 problemDetails.Extensions["errors"] = exception?.Data;
                 break;
         }
+
         context.Response.StatusCode = problemDetails.Status.Value;
         context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
         {
             NoCache = true,
         };
+
         context.Response.ContentType = "application/problem+json";
         await context.Response.WriteAsJsonAsync(problemDetails);
     }
